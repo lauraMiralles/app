@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PBE</string>
+    <string name="app_description">Welcome to Course Manager</string>
+    <string name="app_button">Login</string>
+    <string name="app_textUsername">Username</string>
+    <string name="app_textHostportpath">host:port/path</string>
+    <string name="app_textPasword">uid password</string>
+</resources>

@@ -1,0 +1,16 @@
+{
+  "contents": [
+    { "subject": "AST", "name": "control teoria", "mark": "7.5" },
+    { "subject": "AST", "name": "Lab1", "mark": "3.2" },
+    { "subject": "AST", "name": "Lab2", "mark": "4.7" },
+    { "subject": "AST", "name": "final", "mark": "8.6" },
+    { "subject": "PBE", "name": "puzzle1", "mark": "2.8" },
+    { "subject": "PBE", "name": "puzzle2", "mark": "8.4" },
+    { "subject": "PBE", "name": "control", "mark": "7.3" },
+    { "subject": "PBE", "name": "CDR", "mark": "8" },
+    { "subject": "PBE", "name": "FR", "mark": "9" }
+  ]
+}
+
+
+
