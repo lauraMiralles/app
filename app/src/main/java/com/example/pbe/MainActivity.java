@@ -38,97 +38,74 @@ public class MainActivity extends AppCompatActivity {
     EditText username, host, password;
     Button buttonlogin;
     private RequestQueue rq;
-    boolean UsuarioExiste;
-    boolean ContraseñaCorrecta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rq = Volley.newRequestQueue(this);
-
         username = findViewById(R.id.user);
         host = findViewById(R.id.host);
         password = findViewById(R.id.password);
         buttonlogin = findViewById(R.id.button);
-        boolean existe = false;
 
         buttonlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if(username.getText().toString().equals("a") && username.getText().toString().equals("a") && host.getText().toString().equals("a")){
-                if(username.getText().toString().equals("a")){
-                    //aqui cambio a la siguiente ventana
-                    Intent intent = new Intent(MainActivity.this,Calendario.class );
-                    startActivity(intent);
-
-                    Toast.makeText(MainActivity.this, "Credenciales corectas", Toast.LENGTH_SHORT).show();
-                }else{
-                    //si no existe ese usuario salta un error
-                    Toast.makeText(MainActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
-                }
+                peticionUsuario(username.getText().toString(),host.getText().toString(), password.getText().toString());
             }
-            /*
-            public void onClick(View view) {
-                //if(username.getText().toString().equals("a") && username.getText().toString().equals("a") && host.getText().toString().equals("a")){
-                public boolean peticionUsuario(username.getText().toString(),host.getText().toString(),password.getText().toString())
-                if(UsuarioExiste==true&&ContraseñaCorrecta==true){
-                    //aqui cambio a la siguiente ventana
-                    Intent intent = new Intent(MainActivity.this,Calendario.class );
-                    startActivity(intent);
-
-                    Toast.makeText(MainActivity.this, "Credenciales corectas", Toast.LENGTH_SHORT).show();
-                }else{
-                    //si no existe ese usuario salta un error
-                    if(UsuarioExiste==false){
-                        Toast.makeText(MainActivity.this, "El usuario no existe", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(MainActivity.this, "La contraseña es incorrecta", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-            */
         });
-
-
-
     }
 
-
-    public void peticionUsuario(String usuario,String host,String port, String Password) {
-        String url = "http://" + host + ":" + port + "/" + "user";
+    public void peticionUsuario(String usuario,String hostyport, String Password) {
+        String url = "http://" + hostyport + "/" + "students";
         JsonObjectRequest request =new JsonObjectRequest(Request.Method.GET,
                 url,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         try {
                             JSONArray mJsonArray = response.getJSONArray("contents"); //nombre de la lista
-                            for(int i =0; i<mJsonArray.length();i++){
-                                JSONObject mJsonObject = mJsonArray.getJSONObject(i);
-                                String comparar = mJsonObject.getString("id");
-                                if(usuario.equals(comparar)){
-                                    UsuarioExiste = true;
-                                    String compararContraseña = mJsonObject.getString("id");
-                                    if(password.equals(compararContraseña)){
-                                        ContraseñaCorrecta = true;
+                            if(mJsonArray.length() != 0) {
+                                boolean UsuarioExiste = false;
+                                boolean ContraseñaCorrecta = false;
+                                for (int i = 0; i < mJsonArray.length(); i++) {
+                                    JSONObject mJsonObject = mJsonArray.getJSONObject(i);
+                                    String comparar = mJsonObject.getString("name");
+                                    if (usuario.equals(comparar)) {
+                                        UsuarioExiste = true;
+                                        String compararContraseña = mJsonObject.getString("password");
+                                        if (Password.equals(compararContraseña)) {
+                                            ContraseñaCorrecta = true;
+                                        }
                                     }
-
                                 }
+                                if (UsuarioExiste && ContraseñaCorrecta) {
+                                    //aqui cambio a la siguiente ventana
+                                    Intent intent = new Intent(MainActivity.this, Calendario.class);
+                                    startActivity(intent);
+                                    Toast.makeText(MainActivity.this, "Credenciales corectas", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    if(!UsuarioExiste){
+                                        Toast.makeText(MainActivity.this, "El usuario es incorrecto", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "La constraseña es incorrecta", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                System.out.println(mJsonArray.length());
+                            } else {
+                                Toast.makeText(MainActivity.this, "PUERTO INCORRECTO", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error){
-
+                        System.out.println(error);
                     }
                 });
         rq.add(request);

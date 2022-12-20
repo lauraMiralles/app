@@ -61,7 +61,7 @@
         android:id="@+id/button"
         android:layout_width="160dp"
         android:layout_height="50dp"
-        android:text="Button"
+        android:text="login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
