@@ -1,6 +1,5 @@
 # app
 
-Aplicación cliente android en el cual el cliente accede con un usuario y contraseña y puede acceder a sus datos.
-Hecho con android studio.
+Se ha desarrollado una aplicación cliente para Android en la cual los usuarios pueden acceder a sus datos mediante un inicio de sesión con usuario y contraseña. Este desarrollo se ha llevado a cabo utilizando Android Studio.
 
-La sección del servidor no se encuentra en este repositorio ya que no fui la persona que realizó ese código.
+Cabe destacar que la sección del servidor no se encuentra en este repositorio, dado que no he sido responsable de la implementación de dicho código.
